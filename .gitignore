@@ -1,0 +1,3 @@
+project1/datasets/*.zip
+project1/datasets/*.csv
+project1/datasets/*/
