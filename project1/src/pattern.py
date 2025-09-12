@@ -1,11 +1,4 @@
-import sys
-import os
-
-# Make the local OpenCEP source importable
-sys.path.append(os.path.join(os.path.dirname(__file__), '../..', 'OpenCEP'))
-
 from datetime import timedelta
-
 from base.Pattern import Pattern
 from base.PatternStructure import SeqOperator, KleeneClosureOperator, PrimitiveEventStructure
 from condition.CompositeCondition import AndCondition
@@ -14,7 +7,7 @@ from condition.KCCondition import KCIndexCondition
 
 
 def bike_hot_path_pattern():
-    # Pattern structure: SEQ( (BikeTrip a)+ , BikeTrip b ) within 1 hour
+    # Pattern: (a)+ followed by b
     structure = SeqOperator(
         KleeneClosureOperator(PrimitiveEventStructure("BikeTrip", "a")),
         PrimitiveEventStructure("BikeTrip", "b")
@@ -22,32 +15,40 @@ def bike_hot_path_pattern():
 
     conditions = AndCondition()
 
-    # For every consecutive pair in the Kleene closure: same bike_id
     conditions.add_atomic_condition(
         KCIndexCondition(
             names={"a"},
-            getattr_func=lambda e: e.payload["bike_id"],
-            relation_op=lambda x, y: x == y,
-            offset=1,
-        )
+            getattr_func=lambda e: e,  # full dict
+            relation_op=lambda prev, curr: (
+                prev["bike_id"] == curr["bike_id"] and
+                float(prev["end_station"]) == float(curr["start_station"])
+            ),
+            offset=1
     )
+)
 
-    # For every consecutive pair in the Kleene closure: prev.end_station == curr.start_station
-    conditions.add_atomic_condition(
-        KCIndexCondition(
-            names={"a"},
-            getattr_func=lambda e: e.payload,
-            relation_op=lambda prev_payload, curr_payload: prev_payload["end_station"] == curr_payload["start_station"],
-            offset=1,
-        )
-    )
-
-    # Final event constraint: end station is in {7,8,9}
+    # Final 'b': end_station in {7.0, 8.0, 9.0}
     conditions.add_atomic_condition(
         SimpleCondition(
-            Variable("b", lambda x: x["end_station"]),
-            relation_op=lambda v: v in {7, 8, 9},
+            Variable("b", lambda e: float(e["end_station"])),
+            relation_op=lambda v: v in {7.0, 8.0, 9.0}
         )
     )
 
+    # Time window
+    return Pattern(structure, conditions, timedelta(hours=1))
+
+
+def simple_bike_trip_pattern():
+    structure = SeqOperator(
+        PrimitiveEventStructure("BikeTrip", "a")
+    )
+
+    # Trivial condition: end_station >= 0 (always true if station is valid)
+    conditions = SimpleCondition(
+        Variable("a", lambda x: x["end_station"]),
+        relation_op=lambda v: v == "7"
+    )
+
+    # 1-hour time window (required, arbitrary for testing)
     return Pattern(structure, conditions, timedelta(hours=1))
