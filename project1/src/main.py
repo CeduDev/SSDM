@@ -3,6 +3,7 @@ import os
 import json
 from datetime import datetime
 
+sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
 sys.path.append(os.path.join(os.path.dirname(__file__), '../..', 'OpenCEP'))
 dataset_dir = os.path.join(os.path.dirname(__file__), "..", "datasets", "2025-05-data")
 
