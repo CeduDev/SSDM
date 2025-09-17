@@ -1,0 +1,8 @@
+ride_id,rideable_type,started_at,ended_at,start_station_name,start_station_id,end_station_name,end_station_id,start_lat,start_lng,end_lat,end_lng,member_casual
+9DD48ABED65F7015,classic_bike,2025-05-04 14:19:21.329,2025-05-04 14:24:15.721,W Broadway & Spring St,5569.06,Lafayette St & Grand St,5422.09,40.72494672359416,-74.00165855884552,40.72028,-73.99879,member
+FF82206785FF6C44,classic_bike,2025-05-07 17:41:53.824,2025-05-07 17:50:02.742,W Broadway & Spring St,5569.06,Lafayette St & Grand St,5422.09,40.72494672359416,-74.00165855884552,40.72028,-73.99879,member
+5AEFCBE946C15D90,electric_bike,2025-05-11 20:21:07.908,2025-05-11 20:33:39.623,Coffey St & Ferris St,4137.14,3 St & 7 Ave,3905.15,40.67818387977647,-74.0170168876648,40.6703837,-73.97839676,member
+6263552B7DC7E709,electric_bike,2025-05-08 14:06:13.781,2025-05-08 14:15:52.413,Coffey St & Ferris St,4137.14,Fulton St & Adams St,4637.06,40.67818387977647,-74.0170168876648,40.692418292578466,-73.98949474096298,member
+RIDE001,classic_bike,2025-05-12 10:00:00,2025-05-12 10:15:00,Station A,1,Station B,2,40.71,-74.00,40.72,-74.01,member
+RIDE001,classic_bike,2025-05-12 10:16:00,2025-05-12 10:30:00,Station B,2,Station C,3,40.72,-74.01,40.73,-74.02,member
+RIDE001,classic_bike,2025-05-12 10:31:00,2025-05-12 10:45:00,Station C,3,Station 7,7,40.73,-74.02,40.74,-74.03,member
