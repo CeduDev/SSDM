@@ -1,3 +1,4 @@
-project1/datasets/*.zip
-project1/datasets/*.csv
-project1/datasets/*/
+# project1/datasets/*.zip
+# project1/datasets/*.csv
+project1/datasets/2025-05-data/202505*.csv
+!project1/datasets/2025-05-data/test_data.csv
