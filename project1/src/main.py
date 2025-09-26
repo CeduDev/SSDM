@@ -10,7 +10,7 @@ dataset_dir = os.path.join(os.path.dirname(__file__), "..", "datasets", "2025-05
 from CEP import CEP
 from base.Event import Event
 from stream.Stream import Stream
-from pattern import bike_hot_path_pattern, simple_bike_trip_pattern
+from pattern import bike_hot_path_pattern
 from file_reader import csv_to_stream
 from base.DataFormatter import DataFormatter, EventTypeClassifier
 
@@ -50,6 +50,5 @@ formatter = MyDataFormatter()
 cep = CEP(patterns=[pattern])
 cep.run(in_stream, out_stream, formatter)
 
-print(out_stream.count())
-print(out_stream.first())
-print(out_stream.last())
+for match in out_stream:
+    print(match)
