@@ -2,16 +2,36 @@ import csv
 import json
 from datetime import datetime
 
-def csv_to_stream(filepath, in_stream):
-    """Stream CSV rows directly to input stream"""
-    with open(filepath, 'r') as f:
+
+def csv_to_stream(filepath, in_stream, rows_to_take=None):
+    if rows_to_take != None:
+        print("Taking the first " + str(rows_to_take) + " rows of the csv file")
+    else:
+        print("Taking all the rows of the csv file")
+
+    rows_taken = 0
+
+    with open(filepath, "r") as f:
         reader = csv.DictReader(f)
         for row in reader:
+            if rows_to_take != None and rows_taken >= rows_to_take:
+                break
             # Convert to JSON string and add to stream
-            if row["ride_id"] and row["start_station_id"] and row["end_station_id"] and row["started_at"]:
-                in_stream.add_item(json.dumps({
-                    "bike_id": row["ride_id"],
-                    "start_station": row["start_station_id"],
-                    "end_station": row["end_station_id"],
-                    "started_at": row["started_at"]
-                }))
+            if rows_to_take != None and rows_taken < rows_to_take:
+                if (
+                    row["ride_id"]
+                    and row["start_station_id"]
+                    and row["end_station_id"]
+                    and row["started_at"]
+                ):
+                    in_stream.add_item(
+                        json.dumps(
+                            {
+                                "bike_id": row["ride_id"],
+                                "start_station": row["start_station_id"],
+                                "end_station": row["end_station_id"],
+                                "started_at": row["started_at"],
+                            }
+                        )
+                    )
+                rows_taken += 1
