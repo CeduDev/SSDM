@@ -9,6 +9,7 @@ from stream.Stream import Stream
 from pattern import bike_hot_path_pattern
 from file_reader import csv_to_stream
 from base.DataFormatter import DataFormatter, EventTypeClassifier
+import sys
 
 
 class BikeTripEventTypeClassifier(EventTypeClassifier):
@@ -31,8 +32,9 @@ class BikeTripDataFormatter(DataFormatter):
         return None
 
 
-# filename_endStations_rowsToTake = ["test_data.csv", [7.0, 8.0, 9.0], None]
-filename_endStations_rowsToTake = ["202505-citibike-tripdata_1.csv", [5569.06], 40]
+# filename_endStations_rowsToTake = ["test_data.csv", [7.0, 8.0, 9.0], sys.maxsize]
+filename_endStations_rowsToTake = ["test_data_2.csv", [7.0, 8.0, 9.0], sys.maxsize]
+# filename_endStations_rowsToTake = ["202505-citibike-tripdata_1.csv", [5569.06], 40]
 print(
     "Using filename "
     + filename_endStations_rowsToTake[0]

@@ -1,10 +1,11 @@
 import csv
 import json
 from datetime import datetime
+import sys
 
 
-def csv_to_stream(filepath, in_stream, rows_to_take=None):
-    if rows_to_take != None:
+def csv_to_stream(filepath, in_stream, rows_to_take=sys.maxsize):
+    if rows_to_take != sys.maxsize:
         print("Taking the first " + str(rows_to_take) + " rows of the csv file")
     else:
         print("Taking all the rows of the csv file")
@@ -14,10 +15,10 @@ def csv_to_stream(filepath, in_stream, rows_to_take=None):
     with open(filepath, "r") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            if rows_to_take != None and rows_taken >= rows_to_take:
+            if rows_taken >= rows_to_take:
                 break
             # Convert to JSON string and add to stream
-            if rows_to_take != None and rows_taken < rows_to_take:
+            if rows_taken < rows_to_take:
                 if (
                     row["ride_id"]
                     and row["start_station_id"]

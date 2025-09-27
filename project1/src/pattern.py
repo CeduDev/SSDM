@@ -14,8 +14,8 @@ from misc.SelectionStrategies import SelectionStrategies
 
 policy = ConsumptionPolicy(
     primary_selection_strategy=SelectionStrategies.MATCH_ANY,
-    secondary_selection_strategy=SelectionStrategies.MATCH_SINGLE,
-    single="BikeTrip",
+    # secondary_selection_strategy=SelectionStrategies.MATCH_SINGLE,
+    # single="BikeTrip",
 )
 
 
