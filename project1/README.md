@@ -51,6 +51,14 @@ Stop the cluster when you're done: `<path_to_flink_directort>/bin/stop-cluster.s
 
 ### Building and submitting the job
 
-In the root of the project directory, run the following command to build the project: `mvn clean package`. It should build the .jar-file into the `/target`-directory.
+In the `code`-directory, run the following command to build the project: `mvn clean package`. It should build the .jar-file into the `/target`-directory.
 
-Submit the job to Flink by running the following command from the root of the project directory: `flink run target/project1-0.1.jar`. Now you can see the job submitted in the Flink dashboard at `http://localhost:8081/#/overview`
+Submit the job to Flink by running the following command from the `code`-directory: `flink run target/project1-0.1.jar`. Now you can see the job submitted in the Flink dashboard at `http://localhost:8081/#/overview`
+
+Convenience command for compiling the code and submitting it, assuming you're running it from the `/code`-directory: `mvn clean package && flink run target/mycep-0.1.jar`
+
+### Reading the output of the job
+
+You can find the logs that are produced by the `result.print();`-line in the main java class (currently `BikeHotPathJob.java`) in a separate log file located at `$FLINK_HOME/log/flink-xxx-taskexecutor-xxx.out` file, or in the Flink Dashboard as in the image below.
+
+![flink_dashboard](./assets/flink_dashboard.png)

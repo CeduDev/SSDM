@@ -5,7 +5,7 @@
 - Repo for my BDP course <https://github.com/CeduDev/BDP>
 - CEP library and framework we MUST: <https://github.com/ilya-kolchinsky/OpenCEP>
 - From the image below on the OpenCEP structure, the Statistics Collector and Optimizer are the ones that extract useful statistics and data characteristics, and apply optimization techniques - such as highly complex and deeply nested patterns, tight constraints on response time and detection precision, and processing multiple patterns and stream in parallel - to maximize the performance of the evaluation mechanism (which handles the actual pattern matching).
-  ![OpenCEP structure](./assets/opencep_structure.png)
+  ![OpenCEP structure](../assets/opencep_structure.png)
 - Requirements in short:
   - Given the "hot paths" detection query provided, we need to _implement the state management of partial matches for the query_, including load shedding strategies to handle bursty workloads while ensuring low-latency processing.
     - The measure of success will be the ability to process incoming events with (1) low **latency**, even under high load conditions, while (2) maintaining the **recall** of pattern detection.
