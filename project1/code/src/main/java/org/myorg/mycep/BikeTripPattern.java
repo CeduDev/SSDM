@@ -40,9 +40,10 @@ public class BikeTripPattern {
                     if (lastA == null) return false;
 
                     boolean sameBike = lastA.rideId.equals(b.rideId);
-                    boolean endsInHotStation = b.endStation == 7.0 ||
-                                              b.endStation == 8.0 ||
-                                              b.endStation == 9.0;
+                    boolean endsInHotStation = false;
+                    for (Float e: endStations) {
+                        if (b.endStation == e) endsInHotStation = true;
+                    }
                     return sameBike && endsInHotStation;
                 }
             })
