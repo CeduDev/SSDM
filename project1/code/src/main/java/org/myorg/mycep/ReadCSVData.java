@@ -49,7 +49,7 @@ public class ReadCSVData {
             })
             .assignTimestampsAndWatermarks(
                 WatermarkStrategy.<BikeTripEvent>forMonotonousTimestamps()
-                    .withTimestampAssigner((event, ts) -> event.startTime * 1000)
+                    .withTimestampAssigner((event, ts) -> event.startTime)
             );
     }
 }
