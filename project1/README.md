@@ -7,6 +7,10 @@
 - `mvn -version`: 3.8.6
 - `flink --version`: 2.1.0
 
+## Flink docs
+
+[Here](https://nightlies.apache.org/flink/flink-docs-release-2.1/docs/libs/cep/)
+
 ### Installing Java and Maven using SDKMAN
 
 Installing Java and Maven versions is easiest using SDKMAN. Follow [this](https://sdkman.io/install/) guide on how to do it, but simply run these command:
