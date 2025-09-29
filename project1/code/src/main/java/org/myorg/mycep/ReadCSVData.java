@@ -1,6 +1,7 @@
 package org.myorg.mycep;
 
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
+import org.apache.flink.api.java.functions.KeySelector;
 import org.apache.flink.connector.file.src.FileSource;
 import org.apache.flink.connector.file.src.reader.TextLineInputFormat;
 import org.apache.flink.core.fs.Path;
@@ -33,7 +34,7 @@ public class ReadCSVData {
         );
 
         // Parse lines into BikeTripEvent objects
-        return lines
+        DataStream<BikeTripEvent> events = lines
             .filter(line -> !line.startsWith("ride_id")) // skip header
             .map(line -> {
                 String[] parts = line.split(",");
@@ -51,5 +52,12 @@ public class ReadCSVData {
                 WatermarkStrategy.<BikeTripEvent>forMonotonousTimestamps()
                     .withTimestampAssigner((event, ts) -> event.startTime)
             );
+
+        return events.keyBy(new KeySelector<BikeTripEvent, String>() {
+            @Override
+            public String getKey(BikeTripEvent value) throws Exception {
+                return value.rideId;
+            }
+        });
     }
 }
