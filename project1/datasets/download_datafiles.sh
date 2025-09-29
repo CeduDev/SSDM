@@ -1,6 +1,6 @@
-ZIP_FILE="2025-05-data.zip"
-EXTRACT_DIR="2025-05-data"
-URL="https://s3.amazonaws.com/tripdata/202505-citibike-tripdata.zip"
+ZIP_FILE="2019-data.zip"
+EXTRACT_DIR="2019-data"
+URL="https://s3.amazonaws.com/tripdata/2019-citibike-tripdata.zip"
 
 extract_zip() {
   echo "Extracting $ZIP_FILE into $EXTRACT_DIR..."

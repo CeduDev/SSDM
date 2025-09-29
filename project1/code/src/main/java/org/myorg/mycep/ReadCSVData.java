@@ -35,28 +35,31 @@ public class ReadCSVData {
 
         // Parse lines into BikeTripEvent objects
         DataStream<BikeTripEvent> events = lines
-            .filter(line -> !line.startsWith("ride_id")) // skip header
+            .filter(line -> !line.startsWith("tripduration")) // skip header
             .map(line -> {
                 String[] parts = line.split(",");
                 final DateTimeFormatter formatter =
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSS");
 
-                long start_time = LocalDateTime.parse(parts[2], formatter)
-                        .toEpochSecond(ZoneOffset.UTC);
-                long end_time = LocalDateTime.parse(parts[3], formatter)
-                        .toEpochSecond(ZoneOffset.UTC);
+                int bikeId = Integer.parseInt(parts[11]);
+                long startTime = LocalDateTime.parse(parts[1], formatter)
+                    .toInstant(ZoneOffset.UTC).toEpochMilli();
+                long endTime = LocalDateTime.parse(parts[2], formatter)
+                    .toInstant(ZoneOffset.UTC).toEpochMilli();
+                float startStation = Float.parseFloat(parts[3]);
+                float endStation = Float.parseFloat(parts[7]);
 
-                return new BikeTripEvent(parts[0], Float.parseFloat(parts[5]), Float.parseFloat(parts[7]), start_time, end_time);
+                return new BikeTripEvent(bikeId, startStation, endStation, startTime, endTime);
             })
             .assignTimestampsAndWatermarks(
                 WatermarkStrategy.<BikeTripEvent>forMonotonousTimestamps()
                     .withTimestampAssigner((event, ts) -> event.startTime)
             );
 
-        return events.keyBy(new KeySelector<BikeTripEvent, String>() {
+        return events.keyBy(new KeySelector<BikeTripEvent, Integer>() {
             @Override
-            public String getKey(BikeTripEvent value) throws Exception {
-                return value.rideId;
+            public Integer getKey(BikeTripEvent value) throws Exception {
+                return value.bikeId;
             }
         });
     }

@@ -1,5 +1,6 @@
 package org.myorg.mycep;
 
+import org.apache.flink.cep.nfa.aftermatch.AfterMatchSkipStrategy;
 import org.apache.flink.cep.pattern.Pattern;
 import org.apache.flink.cep.pattern.conditions.IterativeCondition;
 
@@ -9,7 +10,9 @@ import java.util.List;
 public class BikeTripPattern {
 
     public static Pattern<BikeTripEvent, ?> hotPathPattern(List<Float> endStations) {
-        return Pattern.<BikeTripEvent>begin("a")
+        AfterMatchSkipStrategy skipStrategy = AfterMatchSkipStrategy.skipPastLastEvent();
+
+        return Pattern.<BikeTripEvent>begin("a", skipStrategy)
             .where(new IterativeCondition<BikeTripEvent>() {
                 @Override
                 public boolean filter(BikeTripEvent current, Context<BikeTripEvent> ctx) throws Exception {
@@ -19,7 +22,7 @@ public class BikeTripPattern {
                     }
                     // Ensure continuity: same bike, previous end = current start
                     for (BikeTripEvent prev : ctx.getEventsForPattern("a")) {
-                        if (prev.rideId.equals(current.rideId) &&
+                        if (prev.bikeId == current.bikeId &&
                         prev.endStation == current.startStation) {
                             return true;
                         }
@@ -39,11 +42,8 @@ public class BikeTripPattern {
                     }
                     if (lastA == null) return false;
 
-                    boolean sameBike = lastA.rideId.equals(b.rideId);
-                    boolean endsInHotStation = false;
-                    for (Float e: endStations) {
-                        if (b.endStation == e) endsInHotStation = true;
-                    }
+                    boolean sameBike = lastA.bikeId == b.bikeId;
+                    boolean endsInHotStation = endStations.contains(b.endStation);
                     return sameBike && endsInHotStation;
                 }
             })

@@ -6,6 +6,7 @@ import org.apache.flink.util.Collector;
 import org.apache.flink.cep.CEP;
 import org.apache.flink.cep.PatternStream;
 import org.apache.flink.cep.functions.PatternProcessFunction;
+import org.apache.flink.cep.nfa.aftermatch.AfterMatchSkipStrategy;
 import org.apache.flink.cep.pattern.Pattern;
 
 import java.util.Arrays;
@@ -15,11 +16,12 @@ import java.util.Map;
 public class BikeHotPathJob {
     public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        String dataFilePath = "../datasets/";
         String fileName = "test_data.csv";
         List<Float> endStations = Arrays.asList(7.0f, 8.0f, 9.0f);
 
         // Create data from the fileName
-        DataStream<BikeTripEvent> trips = ReadCSVData.fromCsv(env, "../datasets/2025-05-data/", fileName);
+        DataStream<BikeTripEvent> trips = ReadCSVData.fromCsv(env, dataFilePath, fileName);
 
         // Use the pattern
         Pattern<BikeTripEvent, ?> pattern = BikeTripPattern.hotPathPattern(endStations);
