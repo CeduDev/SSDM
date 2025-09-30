@@ -36,6 +36,16 @@ public class ReadCSVData {
         // Parse lines into BikeTripEvent objects
         DataStream<BikeTripEvent> events = lines
             .filter(line -> !line.startsWith("tripduration")) // skip header
+            .filter(line -> {
+            // skip line if any required column is empty
+            String[] parts = line.split(",");
+            return
+                !parts[1].isEmpty() &&               // start time
+                !parts[2].isEmpty() &&               // end time
+                !parts[3].isEmpty() &&               // start station
+                !parts[7].isEmpty() &&               // end station
+                !parts[11].isEmpty();                // bikeId
+        })
             .map(line -> {
                 String[] parts = line.split(",");
                 final DateTimeFormatter formatter =
