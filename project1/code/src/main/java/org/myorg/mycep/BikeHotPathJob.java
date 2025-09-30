@@ -16,15 +16,14 @@ public class BikeHotPathJob {
     public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         
-        // Enable latency tracking every 1 sec
-        //env.getConfig().setLatencyTrackingInterval(1000L);
+        // Enable latency tracking every 1 sec, working? Idk
+        env.getConfig().setLatencyTrackingInterval(1000);
 
-        String dataFilePath = "../datasets/2019-data/";
-        String fileName = "real_data.csv";
         List<Float> endStations = Arrays.asList(7.0f, 8.0f, 9.0f);
 
         // Create data from the fileName
-        DataStream<BikeTripEvent> trips = ReadCSVData.fromCsv(env, dataFilePath, fileName);
+        String dataFilePath = "../datasets/";
+        DataStream<BikeTripEvent> trips = ReadCSVData.fromCsv(env, dataFilePath, "test_data.csv");
 
         // Use the pattern
         Pattern<BikeTripEvent, ?> pattern = BikeTripPattern.hotPathPattern(endStations);
