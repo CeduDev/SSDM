@@ -52,7 +52,7 @@ public class BikeHotPathJob {
                     Collector<String> out) throws Exception {
                 List<BikeTripEvent> aTrips = pattern.get("a");
                 BikeTripEvent b = pattern.get("b").get(0);
-                
+
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 
                 String res = "================\nHot path detected! Stations and times in order are\n";
@@ -71,6 +71,8 @@ public class BikeHotPathJob {
 
                 res += String.format("%s -> %s, times: %s -> %s\n", b.startStation, b.endStation, LocalDateTime.ofEpochSecond(b.startTime / 1000, 0, ZoneOffset.UTC).format(formatter), LocalDateTime.ofEpochSecond(b.endTime / 1000, 0, ZoneOffset.UTC).format(formatter));
                 res += "================";
+
+                res = "HOT PATH";
 
                 out.collect(res);
         }});

@@ -6,14 +6,16 @@ public class BikeTripEvent {
     public float endStation;
     public long startTime;
     public long endTime;
+    public long processingStart;
 
     public BikeTripEvent(int bikeId, float startStation, float endStation,
-                    long startTime, long endTime) {
+                    long startTime, long endTime, long processingStart) {
         this.bikeId = bikeId;
         this.startStation = startStation;
         this.endStation = endStation;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.processingStart = processingStart;
     }
 
     @Override

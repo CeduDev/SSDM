@@ -36,6 +36,7 @@ public class BikeTripPattern {
                 @Override
                 public boolean filter(BikeTripEvent b, Context<BikeTripEvent> ctx) throws Exception {
                     // Ensure same bike as last "a" event
+                    BikeTripEvent firstA = ctx.getEventsForPattern("a").iterator().next();
                     BikeTripEvent lastA = null;
                     for (BikeTripEvent a : ctx.getEventsForPattern("a")) {
                         lastA = a;
@@ -44,7 +45,8 @@ public class BikeTripPattern {
 
                     boolean sameBike = lastA.bikeId == b.bikeId;
                     boolean endsInHotStation = endStations.contains(b.endStation);
-                    return sameBike && endsInHotStation;
+                    long endToEndLatency = b.processingStart - firstA.processingStart;
+                    return sameBike && endsInHotStation && endToEndLatency < 10;
                 }
             })
             .within(Duration.ofMinutes(60));

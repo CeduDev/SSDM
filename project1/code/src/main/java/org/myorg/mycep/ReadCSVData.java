@@ -58,8 +58,9 @@ public class ReadCSVData {
                     .toInstant(ZoneOffset.UTC).toEpochMilli();
                 float startStation = Float.parseFloat(parts[3]);
                 float endStation = Float.parseFloat(parts[7]);
+                long processingStart = System.currentTimeMillis(); // stamp arrival time
 
-                return new BikeTripEvent(bikeId, startStation, endStation, startTime, endTime);
+                return new BikeTripEvent(bikeId, startStation, endStation, startTime, endTime, processingStart);
             })
             .assignTimestampsAndWatermarks(
                 WatermarkStrategy.<BikeTripEvent>forMonotonousTimestamps()
