@@ -2,4 +2,5 @@ project1/datasets/*/*.zip
 project1/datasets/2025-05-data/*
 project1/datasets/2019-data/*
 project1/output/*
+!project1/output/final
 .vscode
