@@ -72,6 +72,7 @@ public class BikeHotPathJob {
                 res += String.format("%s -> %s, times: %s -> %s\n", b.startStation, b.endStation, LocalDateTime.ofEpochSecond(b.startTime / 1000, 0, ZoneOffset.UTC).format(formatter), LocalDateTime.ofEpochSecond(b.endTime / 1000, 0, ZoneOffset.UTC).format(formatter));
                 res += "================";
 
+                // Override resulting string for easier counting of patterns
                 res = "HOT PATH";
 
                 out.collect(res);

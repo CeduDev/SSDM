@@ -20,13 +20,11 @@ public class ReadCSVData {
             String basePath,
             String fileName) {
 
-        // Create file source
         final FileSource<String> source = FileSource
             .forRecordStreamFormat(new TextLineInputFormat(),
                 Path.fromLocalFile(new File(basePath, fileName)))
             .build();
 
-        // Read file into DataStream
         DataStream<String> lines = env.fromSource(
             source,
             WatermarkStrategy.noWatermarks(),

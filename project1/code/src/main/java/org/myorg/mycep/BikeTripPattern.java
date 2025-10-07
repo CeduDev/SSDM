@@ -45,6 +45,7 @@ public class BikeTripPattern {
 
                     boolean sameBike = lastA.bikeId == b.bikeId;
                     boolean endsInHotStation = endStations.contains(b.endStation);
+                    // Latency bound, i.e., load shedding here
                     long endToEndLatency = b.processingStart - firstA.processingStart;
                     return sameBike && endsInHotStation && endToEndLatency < 10;
                 }

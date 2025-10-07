@@ -1,5 +1,13 @@
 # Project 1 V2 - FlinkCEP
 
+## For the TA grading this
+
+If you want to try to run this code yourself, you can find the installation instructions below to install the correct tools locally. If you want to use the CitiBike dataset, you can run the `/datasets/download_datafiles.sh`-script.
+
+The code that is to be evaluated is found under the `/code/src/main/java/org/myorg/mycep`-directory. It contains the four code files mentioned to in the report.
+
+The data collected and displayed in the report was taken from the files found in the `/output/final`-directory. For each latency bound, we ran the program three times and took the average the three runs. This explains the naming convention for the files. E.g., when testing the latency bound of 100ms, the three files `100_1`, `100_2`, and `100_3` were used.
+
 ## Tools
 
 - `java -version`: 11.0.28
