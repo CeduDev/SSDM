@@ -1,0 +1,3 @@
+[submodule "project2/code"]
+	path = project2/code
+	url = git@github.com:CeduDev/SSDM-project2.git
